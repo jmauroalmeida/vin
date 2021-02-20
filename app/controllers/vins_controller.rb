@@ -1,6 +1,8 @@
 class VinsController < ApplicationController
+  include VinsManager
 
   def index
-    @vins = 1
+    @vin = check_vin(params[:search].upcase) if params[:search]
+    x=1
   end
 end
