@@ -9,17 +9,43 @@
           </svg>
       <% end %>
         <%= text_field_tag :search, params[:search], placeholder: 'Type a VIN Code', id: 'search', type: 'text' %>
-        <p style="color: red; text-align: center">
-          Clear everything
-        </p>
+<!--        <p style="color: red; text-align: center">-->
+<!--          Clear everything-->
+<!--        </p>-->
       </div>
     </div>
-<!--      <div class="suggestion-wrap">-->
-<!--        <span>New Arrivals</span>-->
-<!--        <span>Ladies</span>-->
-<!--        <span>Mens</span>-->
-<!--        <span>Accessories</span>-->
-<!--        <span>Sale</span>-->
-<!--      </div>-->
+    <% if @vins %>
+      <div class="vin-information">
+        <div class="suggestion-wrap">
+          <div class="information-title">VIN INFORMATION</div>
+          <div class="vin-attributes">
+            Provided VIN: <span><%= @vins[:provided_vin] %></span>
+            Check Digit: <span><%= @vins[:check_digit] || '-' %></span>
+            Valid? <span class="valid-<%= @vins[:check_digit_valid] %>">
+              <%= @vins[:check_digit_valid].to_s.titleize %>
+            </span>
+            <br><br>
+
+            Message: <span><%= @vins[:message] %></span>
+
+            <% if @vins[:error].present? %>
+              <br><br>
+              Errors:
+              <% @vins[:error].each do |e| %>
+                <span><%= e %></span>
+              <% end %>
+            <% end %>
+
+            <% if @vins[:suggested_vins].present? %>
+              <br><br>
+              Suggested VINs:
+              <% @vins[:suggested_vins].each do |suggestion| %>
+                <span><%= suggestion %></span>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </fieldset>
 <% end %>

@@ -828,6 +828,7 @@ legend {
 .s006 form {
   width: 100%;
   max-width: 790px;
+  margin-top: -300px;
 }
 
 .s006 form legend {
@@ -920,11 +921,13 @@ legend {
 
 .s006 form .suggestion-wrap {
   padding: 0 15px;
+  color: #fff;
 }
 
 .s006 form .suggestion-wrap span {
   font-size: 14px;
   font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
   display: inline-block;
   background: rgba(0, 0, 0, 0.6);
   padding: 0 15px;
@@ -933,6 +936,33 @@ legend {
   border-radius: 16px;
   margin-right: 10px;
   margin-bottom: 10px;
+}
+
+.information-title {
+  font-size: 26px !important;
+  font-weight: bold;
+  font-size: large;
+  padding-bottom: 30px;
+}
+
+.vin-attributes {
+  color: #333333;
+  font-weight: bold;
+}
+
+.vin-information {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 5px;
+  margin: 15px 10px 15px 10px;
+  padding: 15px 10px 15px 10px;
+}
+
+.valid-true {
+  background: rgba(3, 166, 120, 0.6) !important;
+}
+
+.valid-false {
+    background: rgba(207, 0, 15, 0.6) !important;
 }
 
 @media screen and (max-width: 767px) {
