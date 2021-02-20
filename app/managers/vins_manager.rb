@@ -38,9 +38,10 @@ module VinsManager
     else
       suggested_vins = []
       suggested_vins << "#{vin[0..7]}#{checked_digit}#{vin[9..16]}"
-      fill_vin_information(vin, checked_digit, false, "Invalid vin!",
-                           ["Check digit #{vin[8]} is incorrect.",
-                            "Correct value is #{checked_digit}"
+      fill_vin_information(vin, checked_digit, false,
+                           "This looks like an INVALID VIN!",
+                           ["Check digit #{vin[8]} is incorrect.
+                             Correct value is #{checked_digit}."
                            ], suggested_vins
       )
     end
