@@ -1,17 +1,18 @@
 module VinsManager
-
   FORBIDDEN_CHARS = 'IOQ'
 
-  def check_vin(vin)
-    sanitize_code(vin)
+  def fetch_vin_information(vin)
+    check_forbidden_chars(vin)
   end
 
-  def sanitize_code(vin)
-    if vin.match?(/[IOQ]/)
-      @vin = { provided_vin: vin,
-               check_digit: 'invalid',
-               message: 'Contain invalid characters (I, O or Q)'
+  def check_forbidden_chars(vin)
+    if vin.match?(/[#{FORBIDDEN_CHARS}]/)
+      error = []
+      FORBIDDEN_CHARS.each_char { |c|
+        error << "Incorrect character '#{c}' at position #{(vin =~ /#{c}/)+1}" if vin =~ /#{c}/
       }
+      fill_vin_information(vin, nil, false,
+                           'Contains invalid characters (I, O or Q)', error, [])
     else
       calculate_check_digit(vin)
     end
@@ -28,6 +29,34 @@ module VinsManager
     vin.split('').each_with_index do |char, i|
       sum += transliterate(char) * weights[i]
     end
-    map[sum % 11]
+    check_digit_validity(vin, map[sum % 11])
+  end
+
+  def check_digit_validity(vin, checked_digit)
+    if digits_match?(vin[8], checked_digit)
+      fill_vin_information(vin, checked_digit, true, "This looks like a VALID VIN!", [], [])
+    else
+      suggested_vins = []
+      suggested_vins << "#{vin[0..7]}#{checked_digit}#{vin[9..16]}"
+      fill_vin_information(vin, checked_digit, false, "Invalid vin!",
+                           ["Check digit #{vin[8]} is incorrect.",
+                            "Correct value is #{checked_digit}"
+                           ], suggested_vins
+      )
+    end
+  end
+
+  def digits_match?(char, digit)
+    char == digit.to_s
+  end
+
+  def fill_vin_information(vin, check_digit, check_digit_valid, message, error, suggested_vins)
+    @vins = { provided_vin: vin,
+              check_digit: check_digit,
+              check_digit_valid: check_digit_valid,
+              message: message,
+              error: error,
+              suggested_vins: suggested_vins
+    }
   end
 end
