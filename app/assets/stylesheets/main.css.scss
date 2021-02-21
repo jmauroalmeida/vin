@@ -819,7 +819,8 @@ legend {
   -ms-flex-align: center;
       align-items: center;
   font-family: 'Poppins', sans-serif;
-  background: url("car-wallpaper.jpg");
+  //background: url("car-wallpaper.jpg");
+  background-image: url(image_path("car-wallpaper.jpg"));
   background-size: cover;
   background-position: top center;
   padding: 15px;
